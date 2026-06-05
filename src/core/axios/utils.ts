@@ -27,7 +27,7 @@ export const formDataToObject = (params: FormData) => {
   return obj;
 }
 
-export const decompressResponseBody = (body: Buffer, contentEncoding?: string) => {
+export const decompressResponseBody = (body: Buffer<ArrayBuffer>, contentEncoding?: string): Buffer<ArrayBuffer> => {
   if (!contentEncoding) {
     return body;
   }

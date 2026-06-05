@@ -92,15 +92,15 @@ export class EdgeTTSEngine {
       }); */
     });
   }
-  sendSSMLRequest(ssmlHeaders: string) {
-    return new Promise<Buffer>((reso, reje) => {
+  sendSSMLRequest(ssmlHeaders: string): Promise<Buffer<ArrayBuffer>> {
+    return new Promise<Buffer<ArrayBuffer>>((reso, reje) => {
       if (isNull(this.wss)) {
         return reje();
       }
-      let body = Buffer.alloc(0);
+      let body: Buffer<ArrayBuffer> = Buffer.alloc(0);
       this.wss.onmessage = e => {
         if (!isString(e.data)) {
-          const data = <Buffer>e.data.slice(e.data.toString('utf-8').indexOf('Path:audio') + 12);
+          const data = <Buffer<ArrayBuffer>>e.data.slice(e.data.toString('utf-8').indexOf('Path:audio') + 12);
           body = Buffer.concat([body, data]);
           return;
         }
