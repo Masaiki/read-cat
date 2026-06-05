@@ -45,6 +45,9 @@ const {
   cacheSize,
   clearCache
 } = useCache();
+const formatCacheSize = (size: string) => {
+  return `${(Number(size) / 1024 / 1024).toFixed(2)} MB`;
+}
 
 const {
   windowTransparentSwitchIsLoading,
@@ -193,7 +196,7 @@ export default {
         <ElButton circle type="danger" size="small" :icon="IconDelete" @click="clearCache" />
       </template>
       <SettingsCardItem v-memo="[cacheSize]" title="当前缓存大小">
-        <ElInput v-model="cacheSize" readonly :formatter="(size: number) => (size / 1024 / 1024).toFixed(2) + ' MB'" />
+        <ElInput v-model="cacheSize" readonly :formatter="formatCacheSize" />
       </SettingsCardItem>
     </SettingsCard>
     <SettingsCard title="高级">

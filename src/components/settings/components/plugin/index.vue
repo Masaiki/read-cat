@@ -31,6 +31,7 @@ import { useDefaultSearch } from '../../../../hooks/default-search';
 import { useDefaultPagination } from '../../../../hooks/default-pagination';
 import { isNewerVersionPlugin } from '../../../../core/is';
 import { useClipboard } from '../../../../views/read/hooks/clipboard';
+import { Plugin } from './hooks/plugin';
 
 const { pluginDevtools, readAloud } = useSettingsStore();
 const {
@@ -70,6 +71,7 @@ const {
 } = usePluginDevtools();
 
 const clipboard = useClipboard();
+const asPlugin = (row: unknown) => row as Plugin;
 </script>
 <script lang="ts">
 export default {
@@ -138,7 +140,7 @@ export default {
           <ElTableColumn label="状态" width="70">
             <template #default="{ row }">
               <ElCheckTag class="settings-card-item-plugin-state-check-tag" :checked="row.enable" type="primary"
-                @click="toggleState(row)">{{ row.deprecated ? '已弃用' : row.enable ? '已启用' : '已禁用' }}</ElCheckTag>
+                @click="toggleState(asPlugin(row))">{{ row.deprecated ? '已弃用' : row.enable ? '已启用' : '已禁用' }}</ElCheckTag>
             </template>
           </ElTableColumn>
           <ElTableColumn label="版本号">
@@ -155,7 +157,7 @@ export default {
                 {{ row.id === readAloud.use ? '使用中' : '使用' }}
               </ElButton>
               <template v-if="!row.builtIn">
-                <ElButton link size="small" type="danger" @click="deletePlugin(row)">删除</ElButton>
+                <ElButton link size="small" type="danger" @click="deletePlugin(asPlugin(row))">删除</ElButton>
                 <ElButton link size="small" type="success" @click="updatePlugin(row.id)">更新</ElButton>
               </template>
             </template>
