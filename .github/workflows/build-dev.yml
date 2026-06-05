@@ -35,14 +35,17 @@ jobs:
       - name: Build electron apps for windows platform
         if: matrix.os == 'windows-latest'
         run: |
-          npm run build:win32:x64
-          npm run build:win32:windows7
+          npm run build:vite
+          node builder.cjs --win32=x64,arm64
+          node builder.cjs --win32=ia32 --windows7
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build electron apps for darwin platform
         if: matrix.os == 'macos-latest'
-        run: npm run build:darwin
+        run: |
+          npm run build:vite
+          node builder.cjs --darwin=x64,arm64
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
